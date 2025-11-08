@@ -1,5 +1,6 @@
 #!/bin/bash
 # This script updates and cleans the system using apt, with logging.
+# (REMOVED 'sudo' for Docker compatibility)
 
 # Get the directory where this script is located
 SCRIPT_DIR=$(dirname "$0")
@@ -14,8 +15,8 @@ log_message "--- Update Script Started ---"
 echo "--- Starting System Update (see logs/maintenance.log for detailed output) ---"
 
 # --- Step 1: apt update ---
-log_message "Running 'sudo apt update'..."
-sudo apt update >> "$LOG_FILE" 2>&1
+log_message "Running 'apt update'..."
+apt update >> "$LOG_FILE" 2>&1
 if [ $? -ne 0 ]; then
     log_message "ERROR: 'apt update' failed."
     echo "ERROR: 'apt update' failed. Check log."
@@ -26,8 +27,8 @@ log_message "'apt update' successful."
 echo "Step 1/3: Update complete."
 
 # --- Step 2: apt upgrade ---
-log_message "Running 'sudo apt upgrade -y'..."
-sudo apt upgrade -y >> "$LOG_FILE" 2>&1
+log_message "Running 'apt upgrade -y'..."
+apt upgrade -y >> "$LOG_FILE" 2>&1
 if [ $? -ne 0 ]; then
     log_message "ERROR: 'apt upgrade' failed."
     echo "ERROR: 'apt upgrade' failed. Check log."
@@ -38,8 +39,8 @@ log_message "'apt upgrade' successful."
 echo "Step 2/3: Upgrade complete."
 
 # --- Step 3: apt autoremove ---
-log_message "Running 'sudo apt autoremove -y'..."
-sudo apt autoremove -y >> "$LOG_FILE" 2>&1
+log_message "Running 'apt autoremove -y'..."
+apt autoremove -y >> "$LOG_FILE" 2>&1
 if [ $? -ne 0 ]; then
     log_message "ERROR: 'apt autoremove' failed."
     echo "ERROR: 'apt autoremove' failed. Check log."

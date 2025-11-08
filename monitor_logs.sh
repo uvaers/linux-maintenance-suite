@@ -1,5 +1,6 @@
 #!/bin/bash
 # This script monitors a log file for keywords and logs its findings.
+# (REMOVED 'sudo' for Docker compatibility)
 
 # --- Configuration ---
 LOG_FILE_TO_WATCH="/var/log/syslog"
@@ -18,8 +19,8 @@ log_message() {
 log_message "--- Log Monitor Started ---"
 echo "--- Starting Log Monitor for: $KEYWORD ---"
 
-# We create a variable to hold the results
-FOUND_LOGS=$(sudo tail -n 50 $LOG_FILE_TO_WATCH | grep "$KEYWORD")
+# (Removed 'sudo' from this command)
+FOUND_LOGS=$(tail -n 50 $LOG_FILE_TO_WATCH | grep "$KEYWORD")
 
 if [ $? -eq 0 ]; then
     log_message "ALERT: $KEYWORD found in recent logs."
